@@ -7,7 +7,7 @@ class CardTransacao extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
+      height: 450,
       child: ListView.builder(
         padding: EdgeInsets.only(left: 10, right: 10),
         itemCount: transacoes.length,
@@ -83,7 +83,7 @@ class CardTransacao extends StatelessWidget {
                               color: kGreyColor),
                         ),
                         Text(
-                          transacoes[index].data.day.toString() + "/" +
+                              transacoes[index].data.day.toString() + "/" +
                               transacoes[index].data.month.toString() + "/" +
                               transacoes[index].data.year.toString(),
                           style: GoogleFonts.nunito(
