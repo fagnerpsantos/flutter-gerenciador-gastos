@@ -71,15 +71,27 @@ class CardTransacao extends StatelessWidget {
                 ),
                 Row(
                   children: <Widget>[
-                    Text(
-                      transacoes[index].valor.toString(),
-                      style: GoogleFonts.nunito(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: kGreyColor),
-                    ),
-                    SizedBox(
-                      width: 16,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          transacoes[index].valor.toString(),
+                          style: GoogleFonts.nunito(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: kGreyColor),
+                        ),
+                        Text(
+                          transacoes[index].data.day.toString() + "/" +
+                              transacoes[index].data.month.toString() + "/" +
+                              transacoes[index].data.year.toString(),
+                          style: GoogleFonts.nunito(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: kGreyColor),
+                        )
+                      ],
                     )
                   ],
                 )
