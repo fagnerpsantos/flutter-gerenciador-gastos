@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gerenciador_gastos/screens/cadastrar_transacao/cadastrar_transacao_screen.dart';
 import 'package:flutter_gerenciador_gastos/screens/constants/color_contant.dart';
 import 'package:flutter_gerenciador_gastos/screens/home/components/body.dart';
 
@@ -35,7 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: drawer(context),
       floatingActionButton: FloatingActionButton(
         mini: true,
-        onPressed: (){},
+        onPressed: (){
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => CadastrarTransacaoScreen(),
+            ),
+          );
+        },
         child: Icon(Icons.add),
       ),
     );

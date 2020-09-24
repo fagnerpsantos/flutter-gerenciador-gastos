@@ -4,7 +4,28 @@ class Transacao {
   double valor;
   DateTime data;
 
-  Transacao({this.id, this.tipo, this.titulo, this.descricao, this.valor, this.data});
+  Transacao({this.id, this.tipo, this.titulo, this.descricao,
+    this.valor, this.data});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'tipo': tipo,
+      'titulo': titulo,
+      'descricao': descricao,
+      'valor': valor,
+      'data': data,
+    };
+  }
+
+  Transacao.fromMap(Map map){
+    id = map["id"];
+    titulo = map["titulo"];
+    tipo = map["tipo"];
+    descricao = map["descricao"];
+    valor = map["valor"];
+    data = map["data"];
+  }
 
 
 }
