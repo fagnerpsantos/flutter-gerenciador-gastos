@@ -13,16 +13,16 @@ Drawer drawer(BuildContext context) {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.person),
-          title: Text("Minha conta"),
+          leading: Icon(Icons.home),
+          title: Text("Home"),
           onTap: () {
             Navigator.pop(context);
             //Navegar para outra página
           },
         ),
         ListTile(
-          leading: Icon(Icons.shopping_basket),
-          title: Text("Meus pedidos"),
+          leading: Icon(Icons.history),
+          title: Text("Histórico"),
           onTap: () {
             Navigator.pop(context);
             //Navegar para outra página
@@ -30,8 +30,8 @@ Drawer drawer(BuildContext context) {
           },
         ),
         ListTile(
-          leading: Icon(Icons.favorite),
-          title: Text("Favoritos"),
+          leading: Icon(Icons.account_balance),
+          title: Text("Contas"),
           onTap: () {
             Navigator.pop(context);
             //Navegar para outra página
