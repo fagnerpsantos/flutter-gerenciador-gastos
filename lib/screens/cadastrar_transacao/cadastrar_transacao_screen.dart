@@ -7,6 +7,9 @@ import 'package:date_format/date_format.dart';
 
 
 class CadastrarTransacaoScreen extends StatefulWidget {
+  final int tipoTransacao;
+
+  CadastrarTransacaoScreen({this.tipoTransacao});
 
   @override
   _CadastrarTransacaoScreenState createState() => _CadastrarTransacaoScreenState();
@@ -17,7 +20,6 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
   Transacao transacao;
   final _tituloController = TextEditingController();
   final _descricaoController = TextEditingController();
-  final _tipoController = TextEditingController();
   final _valorController = TextEditingController();
   final _dataController = TextEditingController();
   DateTime selectedDate = DateTime.now();
@@ -52,11 +54,6 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
                   decoration: InputDecoration(labelText: "Descrição"),
                 ),
                 TextFormField(
-                  controller: _tipoController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: "Tipo"),
-                ),
-                TextFormField(
                   controller: _valorController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(labelText: "Valor"),
@@ -83,7 +80,7 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
                         Transacao newTransacao = Transacao(
                             titulo: _tituloController.text,
                             descricao: _descricaoController.text,
-                            tipo: int.parse(_tipoController.text),
+                            tipo: widget.tipoTransacao,
                             valor: double.parse(_valorController.text),
                             data: selectedDate.toString());
                         ts.addTransacao(newTransacao);
