@@ -15,6 +15,7 @@ class TransacaoService {
       descricao: transacoes['descricao'],
       valor: transacoes['valor'],
       data: transacoes['data'],
+      conta: transacoes['conta'],
     )).toList();
     return _transacaoList;
   }
@@ -26,7 +27,8 @@ class TransacaoService {
       tipo: transacao.tipo,
       descricao: transacao.descricao,
       valor: transacao.valor,
-      data: transacao.data
+      data: transacao.data,
+      conta: transacao.conta
     );
     DbUtil.insertData('transacao', newTransacao.toMap());
 

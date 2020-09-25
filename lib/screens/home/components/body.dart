@@ -103,7 +103,7 @@ class _BodyState extends State<Body> {
                     // physics: const AlwaysScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: 6,
+                    itemCount: _transacoes.length > 6 ? 6 : _transacoes.length,
                     padding: EdgeInsets.all(10),
                     itemBuilder: (context, index) {
                       return cardTransacao(context, index, _transacoes[index]);

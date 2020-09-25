@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gerenciador_gastos/models/conta.dart';
 import 'package:flutter_gerenciador_gastos/models/transacao.dart';
 import 'package:flutter_gerenciador_gastos/screens/home/home_screen.dart';
+import 'package:flutter_gerenciador_gastos/services/conta_service.dart';
 import 'package:flutter_gerenciador_gastos/services/transacao_service.dart';
 import 'package:date_format/date_format.dart';
 
@@ -16,18 +18,23 @@ class CadastrarTransacaoScreen extends StatefulWidget {
 }
 
 class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
-  final TransacaoService ts = TransacaoService();
+  TransacaoService ts = TransacaoService();
   Transacao transacao;
+  ContaService cs = ContaService();
+  Future<List> _loadContas;
+  List<Conta> _contas;
   final _tituloController = TextEditingController();
   final _descricaoController = TextEditingController();
   final _valorController = TextEditingController();
   final _dataController = TextEditingController();
   DateTime selectedDate = DateTime.now();
+  Conta _contaSelecionada;
 
 
   @override
   void initState() {
     super.initState();
+    _loadContas = _getContas();
   }
 
   @override
@@ -36,73 +43,100 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
       appBar: AppBar(
         title: Text("Cadastro de transação"),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextFormField(
-                  controller: _tituloController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(labelText: "Título"),
-                ),
-                TextFormField(
-                  controller: _descricaoController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(labelText: "Descrição"),
-                ),
-                TextFormField(
-                  controller: _valorController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(labelText: "Valor"),
-                ),
-                GestureDetector(
-                  onTap: () => _selectDate(context),
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _dataController,
-                      keyboardType: TextInputType.datetime,
-                      decoration:
-                      InputDecoration(
-                          labelText: formatDate(selectedDate, [dd, '/', mm, '/', yyyy])),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 20),
-                  child: Container(
-                    height: 40,
-                    width: double.infinity,
-                    child: RaisedButton(
-                      onPressed: () {
-                        Transacao newTransacao = Transacao(
-                            titulo: _tituloController.text,
-                            descricao: _descricaoController.text,
-                            tipo: widget.tipoTransacao,
-                            valor: double.parse(_valorController.text),
-                            data: selectedDate.toString());
-                        ts.addTransacao(newTransacao);
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => HomeScreen(),
-                          ),
-                        );
-                      },
-                      color: Colors.blue,
-                      child: Text(
-                        "Cadastrar",
-                        style: TextStyle(
-                            color: Colors.white, fontSize: 16),
+      body: FutureBuilder(
+        future: _loadContas,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            _contas = snapshot.data;
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _tituloController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(labelText: "Título"),
                       ),
-                    ),
+                      TextFormField(
+                        controller: _descricaoController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(labelText: "Descrição"),
+                      ),
+                      TextFormField(
+                        controller: _valorController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(labelText: "Valor"),
+                      ),
+                      GestureDetector(
+                        onTap: () => _selectDate(context),
+                        child: AbsorbPointer(
+                          child: TextFormField(
+                            controller: _dataController,
+                            keyboardType: TextInputType.datetime,
+                            decoration:
+                            InputDecoration(
+                                labelText: formatDate(
+                                    selectedDate, [dd, '/', mm, '/', yyyy])),
+                          ),
+                        ),
+                      ),
+                      DropdownButtonFormField(
+                        value: _contaSelecionada,
+                        onChanged: (Conta conta) {
+                          setState(() {
+                            _contaSelecionada = conta;
+                          });
+                        },
+                        items: _contas.map((e) {
+                          return DropdownMenuItem<Conta>(
+                            value: e, child: Text(e.titulo),
+                          );
+                        }).toList(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20, bottom: 20),
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          child: RaisedButton(
+                            onPressed: () {
+                              Transacao newTransacao = Transacao(
+                                  titulo: _tituloController.text,
+                                  descricao: _descricaoController.text,
+                                  tipo: widget.tipoTransacao,
+                                  valor: double.parse(_valorController.text),
+                                  data: selectedDate.toString(),
+                                  conta: _contaSelecionada.id);
+                              ts.addTransacao(newTransacao);
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => HomeScreen(),
+                                ),
+                              );
+                            },
+                            color: Colors.blue,
+                            child: Text(
+                              "Cadastrar",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
-            ),
-          ),
-        ),
+                ),
+              ),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        }
       ),
     );
   }
@@ -116,6 +150,10 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
       setState(() {
         selectedDate = picked;
       });
+  }
+
+  Future<List> _getContas() async {
+    return await cs.getAllContas();
   }
 
 }
