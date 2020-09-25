@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gerenciador_gastos/models/transacao.dart';
 import 'package:flutter_gerenciador_gastos/screens/home/home_screen.dart';
 import 'package:flutter_gerenciador_gastos/services/transacao_service.dart';
+import 'package:date_format/date_format.dart';
+
 
 
 class CadastrarTransacaoScreen extends StatefulWidget {
@@ -67,7 +69,7 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
                       keyboardType: TextInputType.datetime,
                       decoration:
                       InputDecoration(
-                          labelText: selectedDate.toString()),
+                          labelText: formatDate(selectedDate, [dd, '/', mm, '/', yyyy])),
                     ),
                   ),
                 ),
@@ -83,7 +85,7 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
                             descricao: _descricaoController.text,
                             tipo: int.parse(_tipoController.text),
                             valor: double.parse(_valorController.text),
-                            data: selectedDate);
+                            data: selectedDate.toString());
                         ts.addTransacao(newTransacao);
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -118,5 +120,6 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
         selectedDate = picked;
       });
   }
+
 }
 

@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gerenciador_gastos/models/transacao.dart';
 import 'package:flutter_gerenciador_gastos/screens/constants/color_contant.dart';
@@ -75,7 +76,10 @@ Widget cardTransacao(BuildContext context, int index, Transacao transacao) {
                       color: kGreyColor),
                 ),
                 Text(
-                  transacao.data.toString(),
+                  formatDate(
+                      DateTime.parse(transacao.data),
+                      [dd, '/', mm, '/', yyyy]
+                  ).toString(),
                   style: GoogleFonts.nunito(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,

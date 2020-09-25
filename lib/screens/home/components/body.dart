@@ -18,6 +18,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   TransacaoService ts = TransacaoService();
   Future<List> _loadTransacoes;
+  List<Transacao> _transacoes;
 
   @override
   void initState() {
@@ -61,14 +62,14 @@ class _BodyState extends State<Body> {
             future: _loadTransacoes,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                transacoes = snapshot.data;
+                _transacoes = snapshot.data;
                 // transacoes.forEach((element) {print(element.data);});
                 return ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: transacoes.length,
+                  itemCount: _transacoes.length,
                   itemBuilder: (context, index) {
-                    return cardTransacao(context, index, transacoes[index]);
+                    return cardTransacao(context, index, _transacoes[index]);
                   },
                 );
               } else {
