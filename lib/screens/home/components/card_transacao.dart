@@ -26,18 +26,6 @@ Widget cardTransacao(BuildContext context, int index, Transacao transacao) {
             SizedBox(
               width: 20,
             ),
-            // Container(
-            //   width: 44,
-            //   height: 44,
-            //   decoration: BoxDecoration(
-            //     shape: BoxShape.circle,
-            //     color: kWhiteGreyColor,
-            //   ),
-            //   child: Icon(
-            //     transacao.tipo == 1 ? Icons.add : Icons.remove
-            //   ),
-            // ),
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,

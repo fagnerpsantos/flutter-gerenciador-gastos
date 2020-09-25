@@ -28,8 +28,8 @@ class _BodyState extends State<Body> {
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Card Account Section
           CardConta(),
@@ -63,14 +63,17 @@ class _BodyState extends State<Body> {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 _transacoes = snapshot.data;
-                // transacoes.forEach((element) {print(element.data);});
-                return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: _transacoes.length,
-                  itemBuilder: (context, index) {
-                    return cardTransacao(context, index, _transacoes[index]);
-                  },
+                return Expanded(
+                  child: ListView.builder(
+                    // physics: const AlwaysScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: _transacoes.length,
+                    padding: EdgeInsets.all(10),
+                    itemBuilder: (context, index) {
+                      return cardTransacao(context, index, _transacoes[index]);
+                    },
+                  ),
                 );
               } else {
                 return Center(
@@ -80,8 +83,8 @@ class _BodyState extends State<Body> {
             }
           ),
         ],
-      ),
-    );
+      );
+
   }
 
   Future<List> _getTransacoes() async {

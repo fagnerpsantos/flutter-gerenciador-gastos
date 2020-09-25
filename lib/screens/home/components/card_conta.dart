@@ -9,7 +9,7 @@ class CardConta extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 10, left: 10),
       height: 175,
-      width: 220,
+      width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: kBlueColor,
