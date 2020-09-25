@@ -100,7 +100,6 @@ class _BodyState extends State<Body> {
                 _transacoes = snapshot.data;
                 return Expanded(
                   child: ListView.builder(
-                    // physics: const AlwaysScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: _transacoes.length,

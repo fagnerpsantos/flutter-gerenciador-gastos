@@ -47,7 +47,6 @@ class TransacaoService {
     int rowId = id;
     List<dynamic> whereArguments = [rowId];
     DbUtil.editData("transacaos", newTransacao.toMap(), whereString, whereArguments);
-    print("editou");
   }
 
   Future<List> getTransacoesConta(int id) async {
