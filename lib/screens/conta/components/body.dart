@@ -3,14 +3,16 @@ import 'package:flutter_gerenciador_gastos/models/conta.dart';
 import 'package:flutter_gerenciador_gastos/models/transacao.dart';
 import 'package:flutter_gerenciador_gastos/screens/components/card_transacao.dart';
 import 'package:flutter_gerenciador_gastos/screens/constants/color_contant.dart';
+import 'package:flutter_gerenciador_gastos/screens/home/components/card_conta.dart';
 import 'package:flutter_gerenciador_gastos/screens/transacao/transacao_screen.dart';
 import 'package:flutter_gerenciador_gastos/services/conta_service.dart';
 import 'package:flutter_gerenciador_gastos/services/transacao_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'card_conta.dart';
-
 class Body extends StatefulWidget {
+  final int idConta;
+  Body({this.idConta});
+
   @override
   _BodyState createState() => _BodyState();
 }
@@ -19,38 +21,35 @@ class _BodyState extends State<Body> {
   TransacaoService ts = TransacaoService();
   ContaService cs = ContaService();
   Future<List> _loadTransacoes;
-  Future<List> _loadContas;
+  Future<Conta> _loadConta;
   List<Transacao> _transacoes;
-  List<Conta> _contas;
+  Conta _conta;
 
   @override
   void initState() {
     // TODO: implement initState
-    _loadTransacoes = _getTransacoes();
-    _loadContas = _getContas();
+    _loadTransacoes = _getTransacoes(widget.idConta);
+    _loadConta = _getConta(widget.idConta);
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
+      children: <Widget>[
+        Padding(
+          padding:
+          EdgeInsets.only(top: 67, bottom: 16),
+
+          child: Container(
             height: 175,
+            width: double.infinity,
             child: FutureBuilder(
-                future: _loadContas,
+                future: _loadConta,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    _contas = snapshot.data;
-                    return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: _contas.length,
-                        padding: EdgeInsets.only(left: 16, right: 8),
-                        itemBuilder: (context, index) {
-                          return cardConta(context, _contas[index]);
-                        },
-                      );
+                    _conta = snapshot.data;
+                    return cardConta(context, _conta);
                   } else {
                     return Center(
                       child: CircularProgressIndicator(),
@@ -59,41 +58,42 @@ class _BodyState extends State<Body> {
                 }
             ),
           ),
-          Padding(
-              padding:
-              EdgeInsets.only(left: 24, top: 32, bottom: 16, right: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Últimas transações',
-                    style: GoogleFonts.nunito(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: kBlackColor,
-                    ),
+        ),
+        Padding(
+            padding:
+            EdgeInsets.only(left: 24, top: 32, bottom: 16, right: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  'Transações',
+                  style: GoogleFonts.nunito(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: kBlackColor,
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => TransacaoScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'ver todas',
-                      style: GoogleFonts.nunito(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: kBlueColor,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => TransacaoScreen(),
                       ),
+                    );
+                  },
+                  child: Text(
+                    'ver todas',
+                    style: GoogleFonts.nunito(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: kBlueColor,
                     ),
                   ),
-                ],
-              )
-          ),
-          FutureBuilder(
+                ),
+              ],
+            )
+        ),
+        FutureBuilder(
             future: _loadTransacoes,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
@@ -103,7 +103,7 @@ class _BodyState extends State<Body> {
                     // physics: const AlwaysScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: _transacoes.length > 6 ? 6 : _transacoes.length,
+                    itemCount: _transacoes.length,
                     padding: EdgeInsets.all(10),
                     itemBuilder: (context, index) {
                       return cardTransacao(context, index, _transacoes[index]);
@@ -116,17 +116,17 @@ class _BodyState extends State<Body> {
                 );
               }
             }
-          ),
-        ],
-      );
+        ),
+      ],
+    );
 
   }
 
-  Future<List> _getTransacoes() async {
-    return await ts.getAllTransacoes();
+  Future<List> _getTransacoes(int id) async {
+    return await ts.getTransacoesConta(id);
   }
 
-  Future<List> _getContas() async {
-    return await cs.getAllContas();
+  Future<Conta> _getConta(int id) async {
+    return await cs.getConta(id);
   }
 }

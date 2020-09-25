@@ -50,19 +50,19 @@ class TransacaoService {
     print("editou");
   }
 
-  Future<Transacao> getTransacao(int id) async {
-    List<String> columnsToSelect = [
-      "id",
-      "titulo",
-      "tipo",
-      "descricao",
-      "valor",
-      "data",
-    ];
-    String whereString = "id = ?";
+  Future<List> getTransacoesConta(int id) async {
+    String whereString = "conta = ?";
     int rowId = id;
     List<dynamic> whereArguments = [rowId];
-    final dataList = await DbUtil.getDataId("transacao", columnsToSelect, whereString, whereArguments);
-    return Transacao.fromMap(dataList.first);
+    final dataList = await DbUtil.getDataWhere("transacao", whereString, whereArguments);
+    return dataList.map((transacoes) => Transacao(
+      id: transacoes['id'],
+      titulo: transacoes['titulo'],
+      tipo: transacoes['tipo'],
+      descricao: transacoes['descricao'],
+      valor: transacoes['valor'],
+      data: transacoes['data'],
+      conta: transacoes['conta'],
+    )).toList();
   }
 }
