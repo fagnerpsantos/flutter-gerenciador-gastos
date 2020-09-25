@@ -19,7 +19,7 @@ class ContaService {
       titulo: conta.titulo,
       saldo: conta.saldo,
     );
-    DbUtil.insertData('contas', newConta.toMap());
+    DbUtil.insertData('conta', newConta.toMap());
   }
 
   void editConta(int id, Conta conta) async {

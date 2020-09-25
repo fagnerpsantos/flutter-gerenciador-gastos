@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gerenciador_gastos/screens/cadastrar_conta/cadastrar_conta_screen.dart';
 import 'package:flutter_gerenciador_gastos/screens/cadastrar_transacao/cadastrar_transacao_screen.dart';
 import 'package:flutter_gerenciador_gastos/screens/constants/color_contant.dart';
 import 'package:flutter_gerenciador_gastos/screens/home/components/body.dart';
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           label: 'Entrada',
-          labelStyle: TextStyle(fontWeight: FontWeight.w500),
+          labelStyle: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           labelBackgroundColor: kGreenColor,
         ),
         SpeedDialChild(
@@ -77,8 +78,22 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           label: 'Saída',
-          labelStyle: TextStyle(fontWeight: FontWeight.w500),
+          labelStyle: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           labelBackgroundColor: Colors.redAccent,
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.account_balance, color: Colors.white),
+          backgroundColor: kBlueColor,
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => CadastrarContaScreen(),
+              ),
+            );
+          },
+          label: 'Conta',
+          labelStyle: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: kBlueColor,
         ),
       ],
     );

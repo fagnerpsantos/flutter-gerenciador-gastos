@@ -3,13 +3,10 @@ import 'package:flutter_gerenciador_gastos/models/conta.dart';
 import 'package:flutter_gerenciador_gastos/screens/constants/color_contant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CardConta extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+Widget cardConta(BuildContext context, int index, Conta conta) {
     return Container(
       margin: EdgeInsets.only(right: 10, left: 10),
-      height: 175,
-      width: double.infinity,
+      width: 250,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: kBlueColor,
@@ -60,4 +57,5 @@ class CardConta extends StatelessWidget {
       ),
     );
   }
-}
+
+
