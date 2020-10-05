@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gerenciador_gastos/models/conta.dart';
 import 'package:flutter_gerenciador_gastos/models/transacao.dart';
+import 'package:flutter_gerenciador_gastos/screens/constants/color_contant.dart';
 import 'package:flutter_gerenciador_gastos/screens/home/home_screen.dart';
 import 'package:flutter_gerenciador_gastos/services/conta_service.dart';
 import 'package:flutter_gerenciador_gastos/services/transacao_service.dart';
@@ -42,6 +43,7 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Cadastro de transação"),
+        backgroundColor: widget.tipoTransacao == 1 ? kGreenColor : Colors.redAccent,
       ),
       body: FutureBuilder(
         future: _loadContas,
@@ -117,7 +119,7 @@ class _CadastrarTransacaoScreenState extends State<CadastrarTransacaoScreen> {
                                 ),
                               );
                             },
-                            color: Colors.blue,
+                            color: widget.tipoTransacao == 1 ? kGreenColor : Colors.redAccent,
                             child: Text(
                               "Cadastrar",
                               style: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gerenciador_gastos/models/conta.dart';
+import 'package:flutter_gerenciador_gastos/screens/constants/color_contant.dart';
 import 'package:flutter_gerenciador_gastos/screens/home/home_screen.dart';
 import 'package:flutter_gerenciador_gastos/services/conta_service.dart';
 import 'package:date_format/date_format.dart';
@@ -28,6 +29,7 @@ class _CadastrarContaScreenState extends State<CadastrarContaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Cadastro de conta"),
+        backgroundColor: kBlueColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -63,7 +65,7 @@ class _CadastrarContaScreenState extends State<CadastrarContaScreen> {
                           ),
                         );
                       },
-                      color: Colors.blue,
+                      color: kBlueColor,
                       child: Text(
                         "Cadastrar",
                         style: TextStyle(

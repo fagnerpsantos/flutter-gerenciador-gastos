@@ -31,8 +31,19 @@ class ContaService {
     String whereString = "id = ?";
     int rowId = id;
     List<dynamic> whereArguments = [rowId];
-    DbUtil.editData("contas", newConta.toMap(), whereString, whereArguments);
-    print("editou");
+    DbUtil.editData("conta", newConta.toMap(), whereString, whereArguments);
+  }
+
+  void editSaldoConta(int id, double valor, int tipoTransacao) {
+    String sql;
+    if (tipoTransacao == 1) {
+      sql = 'UPDATE conta SET saldo = saldo + ? WHERE id = ?';
+    } else {
+      sql = 'UPDATE conta SET saldo = saldo - ? WHERE id = ?';
+    }
+    List<dynamic> arguments = [valor, id];
+    DbUtil.executeSQL(sql, arguments);
+
   }
 
   Future<Conta> getConta(int id) async {

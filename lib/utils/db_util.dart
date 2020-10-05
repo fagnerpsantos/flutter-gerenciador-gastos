@@ -54,10 +54,15 @@ class DbUtil {
 
   static Future<void> editData(String table, Map<String, Object> dados,
       String whereString, List<dynamic> whereArguments) async {
+        final db = await DbUtil.database();
+        await db.update(table, dados,
+            where: whereString,
+            whereArgs: whereArguments);
+      }
+      
+  static Future<void> executeSQL(String sql, List<dynamic> arguments) async {
     final db = await DbUtil.database();
-    await db.update(table, dados,
-        where: whereString,
-        whereArgs: whereArguments);
+    db.rawUpdate(sql, arguments);
   }
 
 }

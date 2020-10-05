@@ -1,10 +1,12 @@
 import 'package:flutter_gerenciador_gastos/models/transacao.dart';
+import 'package:flutter_gerenciador_gastos/services/conta_service.dart';
 import 'package:flutter_gerenciador_gastos/utils/db_util.dart';
 import 'package:date_format/date_format.dart';
 
 
 class TransacaoService {
   List<Transacao> _transacaoList = [];
+  ContaService cs = ContaService();
 
   Future<List> getAllTransacoes() async {
     final dataList = await DbUtil.getData('transacao');
@@ -31,6 +33,7 @@ class TransacaoService {
       conta: transacao.conta
     );
     DbUtil.insertData('transacao', newTransacao.toMap());
+    cs.editSaldoConta(transacao.conta, transacao.valor, transacao.tipo);
 
   }
 

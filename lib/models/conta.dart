@@ -13,6 +13,12 @@ class Conta {
     };
   }
 
+  Map<String, dynamic> toMapSaldo() {
+    return {
+      'saldo': saldo,
+    };
+  }
+
   Conta.fromMap(Map map){
     id = map["id"];
     titulo = map["titulo"];
